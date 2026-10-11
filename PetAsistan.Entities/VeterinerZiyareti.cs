@@ -1,7 +1,7 @@
 ﻿namespace PetAsistan.Entities
 {
     // Bir hayvanın bir veterinere yaptığı tek bir ziyaret
-    public class VeterinerZiyareti : BaseEntity
+    public class VeterinerZiyareti : BaseEntity, IHatirlatilabilir
     {
         private DateTime _ziyaretTarihi = DateTime.Today;
         private string _sikayet = string.Empty;
@@ -55,5 +55,14 @@
 
         // Veteriner tekrar kontrol istediyse
         public DateTime? SonrakiKontrolTarihi { get; set; }
+
+        // ===== IHatirlatilabilir SÖZLEŞMESİNİN GEREKLERİ =====
+
+        public DateTime? HatirlatmaTarihi => SonrakiKontrolTarihi;
+
+        public string HatirlatmaMetni()
+        {
+            return $"{Hayvan?.Ad} için {Veteriner?.KlinikAdi} kontrol randevusu yaklaşıyor.";
+        }
     }
 }
