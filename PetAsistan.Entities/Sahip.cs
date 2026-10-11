@@ -84,6 +84,10 @@
         // Adres için özel bir kural yok, bu yüzden kısa yazımı kullanıyoruz
         public string? Adres { get; set; }
 
+        // Bu sahibin hayvanları (1 sahip → N hayvan)
+        // List<Hayvan>: Hayvan nesnelerinden oluşan bir liste (generic koleksiyon)
+        public List<Hayvan> Hayvanlar { get; set; } = new List<Hayvan>();
+
         // SADECE OKUNABİLİR property: set yok, dışarıdan değiştirilemez.
         // Ad ve Soyad'dan otomatik hesaplanır. (Veritabanına kaydedilmez.)
         public string AdSoyad => $"{Ad} {Soyad}";
