@@ -97,15 +97,27 @@
         }
 
         // Listelerde "Pamuk (Kedi)" şeklinde görünsün
-
-        // Bu hayvanın TÜM hatırlatmalarını tek listede toplar, tarihe göre sıralar.
+        // Bu hayvanın GÜNCEL hatırlatmalarını tek listede toplar, tarihe göre sıralar.
         // Aşı, ziyaret, ilaç, hatırlatıcı... hepsi farklı sınıf ama hepsi IHatirlatilabilir!
         public List<IHatirlatilabilir> TumHatirlatmalar()
         {
             List<IHatirlatilabilir> liste = new List<IHatirlatilabilir>();
 
-            liste.AddRange(AsiKayitlari);
-            liste.AddRange(Ziyaretler);
+            // AŞILAR: Her aşı türünün sadece EN SON yapılan kaydı
+            // (Eski kayıtlar zaten yenilenmiş, onlar için uyarı çıkmasın)
+            liste.AddRange(AsiKayitlari
+                .GroupBy(a => a.AsiTanimiId)
+                .Select(grup => grup.OrderByDescending(a => a.UygulamaTarihi).First()));
+
+            // ZİYARETLER: Sadece EN SON ziyaretin kontrol tarihi önemli
+            VeterinerZiyareti? sonZiyaret = Ziyaretler
+                .OrderByDescending(z => z.ZiyaretTarihi)
+                .FirstOrDefault();
+
+            if (sonZiyaret != null)
+                liste.Add(sonZiyaret);
+
+            // İLAÇLAR ve HATIRLATICILAR: Biten/tamamlananlar zaten tarih vermiyor (null)
             liste.AddRange(IlacKayitlari);
             liste.AddRange(Hatirlaticilar);
 
