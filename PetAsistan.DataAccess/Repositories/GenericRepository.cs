@@ -44,6 +44,8 @@ namespace PetAsistan.DataAccess.Repositories
 
             // Sadece BU kaydı "eklenecek" olarak işaretle.
             // (Kayda bağlı nesneler, örn. hayvanın Sahip nesnesi, tekrar eklenmesin)
+            // Bağlı nesneleri (Sahip, AsiTanimi vb.) tarama, SADECE bu kaydı kaydet
+            db.ChangeTracker.AutoDetectChangesEnabled = false;
             db.Entry(kayit).State = EntityState.Added;
             db.SaveChanges();
         }
@@ -55,6 +57,8 @@ namespace PetAsistan.DataAccess.Repositories
             kayit.GuncellemeTarihi = DateTime.Now;
 
             // Sadece BU kaydı "değiştirildi" olarak işaretle
+            // Bağlı nesneleri (Sahip, AsiTanimi vb.) tarama, SADECE bu kaydı kaydet
+            db.ChangeTracker.AutoDetectChangesEnabled = false;
             db.Entry(kayit).State = EntityState.Modified;
             db.SaveChanges();
         }
