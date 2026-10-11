@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PetAsistan.AI;
 using PetAsistan.Entities;
 
 namespace PetAsistan.Business.Servisler
@@ -38,12 +39,31 @@ namespace PetAsistan.Business.Servisler
             }
         }
 
+        // ASYNC versiyon: Yapay zeka gibi beklemeli işlemleri, uygulamayı dondurmadan güvenle çalıştırır.
+        // Func<Task<T>>: "İleride T döndürecek, beklenebilir bir iş paketi"
+        protected async Task<IslemSonucu<T>> GetirAsync<T>(Func<Task<T>> islem)
+        {
+            try
+            {
+                T veri = await islem();
+                return IslemSonucu<T>.Basarili(veri);
+            }
+            catch (Exception ex)
+            {
+                return IslemSonucu<T>.Hatali(HataMesajiUret(ex));
+            }
+        }
+
         // Teknik hatayı kullanıcının anlayacağı Türkçe bir mesaja çevirir.
         // virtual: Gerekirse bir servis kendi özel mesajlarını üretebilir (override).
         protected virtual string HataMesajiUret(Exception ex)
         {
             // 1) Kullanıcının yanlış veri girmesi → bizim yazdığımız mesaj zaten anlaşılır
             if (ex is DogrulamaException)
+                return ex.Message;
+
+            // Yapay zeka servisi hataları → GeminiServisi zaten anlaşılır Türkçe mesaj üretiyor
+            if (ex is YapayZekaException)
                 return ex.Message;
 
             // 2) Veritabanı kayıt hataları

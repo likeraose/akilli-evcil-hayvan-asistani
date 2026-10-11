@@ -33,5 +33,17 @@ namespace PetAsistan.DataAccess
 
             return baglanti;
         }
+
+        // Gemini API anahtarı (yoksa boş metin döner, kontrolü GeminiServisi yapar)
+        public static string GeminiApiAnahtari()
+        {
+            return Oku()["Gemini:ApiKey"] ?? string.Empty;
+        }
+
+        // Gemini model adı (yazılmamışsa varsayılan model)
+        public static string GeminiModeli()
+        {
+            return Oku()["Gemini:Model"] ?? "gemini-3.5-flash-lite";
+        }
     }
 }
