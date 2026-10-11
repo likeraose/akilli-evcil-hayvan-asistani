@@ -74,6 +74,10 @@
 
         // Bu hayvana yapılan aşılar (1 hayvan → N aşı kaydı)
         public List<AsiKaydi> AsiKayitlari { get; set; } = new List<AsiKaydi>();
+        public List<IlacKaydi> IlacKayitlari { get; set; } = new List<IlacKaydi>();
+        public List<KiloKaydi> KiloKayitlari { get; set; } = new List<KiloKaydi>();
+        public List<Hatirlatici> Hatirlaticilar { get; set; } = new List<Hatirlatici>();
+        public List<AiSohbetKaydi> AiSohbetKayitlari { get; set; } = new List<AiSohbetKaydi>();
 
         // ===== HESAPLANAN ÖZELLİK (veritabanına kaydedilmez) =====
         // Yaşı doğum tarihinden otomatik hesaplar. Örn: 2.5 yaş
@@ -93,6 +97,24 @@
         }
 
         // Listelerde "Pamuk (Kedi)" şeklinde görünsün
+
+        // Bu hayvanın TÜM hatırlatmalarını tek listede toplar, tarihe göre sıralar.
+        // Aşı, ziyaret, ilaç, hatırlatıcı... hepsi farklı sınıf ama hepsi IHatirlatilabilir!
+        public List<IHatirlatilabilir> TumHatirlatmalar()
+        {
+            List<IHatirlatilabilir> liste = new List<IHatirlatilabilir>();
+
+            liste.AddRange(AsiKayitlari);
+            liste.AddRange(Ziyaretler);
+            liste.AddRange(IlacKayitlari);
+            liste.AddRange(Hatirlaticilar);
+
+            // Tarihi olmayanları çıkar, kalanları tarihe göre sırala
+            return liste
+                .Where(h => h.HatirlatmaTarihi != null)
+                .OrderBy(h => h.HatirlatmaTarihi)
+                .ToList();
+        }
         public override string ToString() => $"{Ad} ({TurAdi})";
     }
 }

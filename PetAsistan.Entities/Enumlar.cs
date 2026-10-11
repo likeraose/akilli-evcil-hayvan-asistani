@@ -23,4 +23,22 @@
         Kopek = 2,
         Kus = 3
     }
+
+    // Kullanıcı hatırlatıcılarının türü
+    public enum HatirlaticiTuru
+    {
+        Randevu = 0,
+        Bakim = 1,      // Tırnak kesimi, tüy bakımı, banyo...
+        Beslenme = 2,   // Mama/kum alımı...
+        Diger = 3
+    }
+
+    // Yapay zekaya hangi amaçla soru soruldu?
+    public enum AiIslemTuru
+    {
+        Sohbet = 0,
+        SemptomDegerlendirme = 1,
+        BeslenmeOnerisi = 2,
+        SaglikOzeti = 3
+    }
 }
