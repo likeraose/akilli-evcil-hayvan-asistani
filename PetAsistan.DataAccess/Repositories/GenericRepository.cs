@@ -59,7 +59,7 @@ namespace PetAsistan.DataAccess.Repositories
             db.SaveChanges();
         }
 
-        public void Sil(int id)
+        public virtual void Sil(int id)
         {
             using var db = new PetAsistanDbContext();
 
