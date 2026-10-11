@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PetAsistan.AI/PetAsistan.AI.csproj" />
+  <Project Path="PetAsistan.Business/PetAsistan.Business.csproj" />
+  <Project Path="PetAsistan.DataAccess/PetAsistan.DataAccess.csproj" />
+  <Project Path="PetAsistan.Entities/PetAsistan.Entities.csproj" />
+  <Project Path="PetAsistan.WinUI/PetAsistan.WinUI.csproj" />
+</Solution>
