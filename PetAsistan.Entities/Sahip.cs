@@ -45,23 +45,8 @@
         public string Telefon
         {
             get { return _telefon; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new DogrulamaException("Telefon numarası boş bırakılamaz.");
-
-                // Kullanıcı "0532 123 45 67" veya "0532-123-45-67" yazabilir,
-                // boşlukları ve tireleri temizliyoruz.
-                string temiz = value.Replace(" ", "").Replace("-", "");
-
-                if (temiz.Length < 10 || temiz.Length > 11 || !temiz.All(char.IsDigit))
-                    throw new DogrulamaException(
-                        "Telefon numarası 10-11 haneli olmalı ve sadece rakam içermelidir. Örnek: 05321234567");
-
-                _telefon = temiz;
-            }
+            set { _telefon = DogrulamaYardimcisi.Telefon(value); }
         }
-
         // E-posta zorunlu değil, boş bırakılabilir (string? → null olabilir)
         public string? Eposta
         {

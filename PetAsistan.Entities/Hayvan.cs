@@ -69,6 +69,9 @@
         public int SahipId { get; set; }
         public Sahip? Sahip { get; set; }
 
+        // Bu hayvanın veteriner ziyaretleri (1 hayvan → N ziyaret)
+        public List<VeterinerZiyareti> Ziyaretler { get; set; } = new List<VeterinerZiyareti>();
+
         // ===== HESAPLANAN ÖZELLİK (veritabanına kaydedilmez) =====
         // Yaşı doğum tarihinden otomatik hesaplar. Örn: 2.5 yaş
         public double Yas => Math.Round((DateTime.Today - DogumTarihi).TotalDays / 365.25, 1);
